@@ -1,22 +1,23 @@
 package service;
 
-import entity.Account;
+import com.example.demo.entity.Account;
+import com.example.demo.service.AccountService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import repository.AccountRepository;
+import com.example.demo.repository.AccountRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
-class AccountServiceTest {
+class AccountServiceUnitTest {
 
     @Mock
     private AccountRepository accountRepository;
@@ -62,4 +63,21 @@ class AccountServiceTest {
         verifyNoInteractions(accountRepository);
 
     }
+    @Test
+    public void Should_ThrowIllegalArgumentException_IfUsernameAlreadyExists(){
+
+        given(accountRepository.findByUsername(account.getUsername())).willReturn(account);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> accountService.createAccount(account));
+        verify(accountRepository, times(1)).findByUsername(account.getUsername());
+    }
+
+    @Test
+    public void Should_ThrowIllegalArgumentException_IfEmailAlreadyExists(){
+
+    }
+
+    //Check so the email and username are already in the database.
+    //Check so a parameter is not null.
 }
