@@ -1,8 +1,7 @@
-package com.example.iber.model;
+package entity;
+
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -16,7 +15,7 @@ public class Account {
     private Long id;
 
     @Column(name = "username", nullable = false)
-    private String name;
+    private String username;
 
     @Column(name = "role", nullable = false)
     private String role;
@@ -24,16 +23,16 @@ public class Account {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "is_payment_confirmed", nullable = false)
-    private boolean isPaymentConfirmed;
-
     @Column(name = "bank_account_number", nullable = false)
     private String bankAccountNumber;
+
+    @Column(name = "is_payment_confirmed", nullable = false)
+    private boolean isPaymentConfirmed;
 
     @Column(name = "payment_history", nullable = false)
     private int paymentHistory;
 
     @Column(name = "active_orders", nullable = false)
-    private int active_orders;
+    private int activeOrders;
 
 }
