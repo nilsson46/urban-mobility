@@ -41,12 +41,25 @@ class AccountServiceTest {
 
     @Test
     public void Should_ReturnAccountDetails_When_CreateAccount(){
+
+         //Arrange
+
+        // Mock the behavior of accountRepository.save(account) to return the account
         given(accountRepository.save(account)).willReturn(account);
 
+        // Act
+        // Call the createAccount method to create an account and get the savedAccount
         Account savedAccount = accountService.createAccount(account);
 
-        assertThat(savedAccount).isNull();
+        // Assert
+        // Check that the savedAccount is not null, indicating a successful account creation
+        assertThat(savedAccount).isNotNull();
+
+        // Verify that the accountRepository's save method was called exactly once with the provided account
         verify(accountRepository, times(1)).save(account);
-        verifyNoMoreInteractions(accountRepository);
+
+        // Verify that there were no other interactions with the accountRepository
+        verifyNoInteractions(accountRepository);
+
     }
 }
