@@ -2,34 +2,34 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Account;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class AccountControllerEndToEndTest {
 
-    @Test
-    void contextLoads() {
-    }
-
-    private Account account;
-
     @Autowired
     private MockMvc mockMvc;
 
-    @BeforeEach
-    public void setup(){
-        account = Account.builder()
+    @Test
+    void Should_CreateAccount_ReturnAccount() throws  Exception{
+
+        Account account = Account.builder()
                 .username("kuro")
                 .role("User")
                 .email("kuro@gmail.com")
@@ -38,15 +38,20 @@ class AccountControllerEndToEndTest {
                 .paymentHistory(0)
                 .activeOrders(0)
                 .build();
-    }
 
-    @Test
-    void test() throws  Exception{
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String expectedJson = objectMapper.writeValueAsString(account);
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/api/account"))
-                .andExpect((ResultMatcher) content().json(expectedJson));
+        String jsonAccount = objectMapper.writeValueAsString(account);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/api/account")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonAccount)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", Matchers.is(1)))
+                .andExpect(jsonPath("$.username", Matchers.is("kur")))
+                .andExpect(jsonPath("$.email", Matchers.is("kuro@gmail.com")));
     }
 
     @Test

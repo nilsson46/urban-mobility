@@ -2,10 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Account;
 import com.example.demo.service.AccountService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/account")
@@ -18,8 +15,8 @@ public class AccountController {
     }
 
     @PostMapping
-    public Account createAccount(Account account){
-        return account;
+    public Account createAccount(@RequestBody Account account) {
+        return accountService.createAccount(account);
     }
 
 }
