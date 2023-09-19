@@ -50,7 +50,7 @@ class AccountControllerEndToEndTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", Matchers.is(1)))
-                .andExpect(jsonPath("$.username", Matchers.is("kur")))
+                .andExpect(jsonPath("$.username", Matchers.is("kuro")))
                 .andExpect(jsonPath("$.email", Matchers.is("kuro@gmail.com")));
     }
 
