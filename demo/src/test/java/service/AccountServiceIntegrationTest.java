@@ -25,7 +25,7 @@ class AccountServiceIntegrationTest {
     } */
 
     @Test
-    public void test(){
+    public void Should_CreateAndReturnAccountFromDatabase(){
         Account account = Account.builder()
                 .username("kuro")
                 .role("User")
