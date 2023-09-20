@@ -45,8 +45,6 @@ class AccountServiceIntegrationTest {
         assertThat(retrievedAccount).isNotNull();
         assertThat(retrievedAccount.getUsername()).isEqualTo("kuro");
 
-
-
     }
 
 
