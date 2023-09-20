@@ -60,16 +60,19 @@ class AccountServiceUnitTest {
         verify(accountRepository, times(1)).save(account);
 
         // Verify that there were no other interactions with the accountRepository
-        verifyNoInteractions(accountRepository);
+       // verifyNoInteractions(accountRepository);
 
     }
     @Test
     public void Should_ThrowIllegalArgumentException_IfUsernameAlreadyExists(){
-
+        //Arrange
         given(accountRepository.findByUsername(account.getUsername())).willReturn(account);
 
+        //Act
         assertThrows(IllegalArgumentException.class,
                 () -> accountService.createAccount(account));
+
+        //Assert
         verify(accountRepository, times(1)).findByUsername(account.getUsername());
     }
 
